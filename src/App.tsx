@@ -1,37 +1,22 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
-
 import { enableScreens } from 'react-native-screens';
 
 enableScreens();
 
-import { StyleSheet, View } from 'react-native';
+import { StatusBar, StyleSheet, View } from 'react-native';
 import {
-  EdgeInsets,
   SafeAreaProvider,
   useSafeAreaInsets,
 } from 'react-native-safe-area-context';
-// import { RootNavigator } from './navigators/RootNavigator';
-
-// const getSafeArea = (safeAreaInsets: EdgeInsets) => {
-//   return {
-//     paddingTop: safeAreaInsets.top,
-//     paddingBottom: safeAreaInsets.bottom,
-//     paddingLeft: safeAreaInsets.left,
-//     paddingRight: safeAreaInsets.right,
-//   };
-// };
+import { getSafeArea } from './utils/getSafeArea';
+import { theme } from './utils/theme';
+import { RootNavigation } from './navigation/RootNavigation';
 
 function AppContent() {
-  // const safeAreaInsets = useSafeAreaInsets();
+  const safeAreaInsets = useSafeAreaInsets();
 
   return (
-    <View>
-      <View>Hello world</View>
+    <View style={[styles.container, getSafeArea(safeAreaInsets)]}>
+      <RootNavigation />
     </View>
   );
 }
@@ -39,6 +24,7 @@ function AppContent() {
 function App() {
   return (
     <SafeAreaProvider>
+      <StatusBar barStyle="light-content" />
       <AppContent />
     </SafeAreaProvider>
   );
@@ -47,6 +33,7 @@ function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: theme.color.primary.purple,
   },
 });
 

@@ -23,4 +23,8 @@ export const theme = {
       lightGrey: '#F8FAFF',
     },
   },
+  spacing: (space: number) => {
+    const baseSpacing = 8;
+    return baseSpacing * space;
+  },
 };
