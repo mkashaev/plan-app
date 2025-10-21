@@ -1,9 +1,12 @@
 import { create } from 'zustand';
 
+export type TaskType = 'urgent' | 'regular' | 'low';
+
 export type Task = {
   id: string;
   title: string;
   completed?: boolean;
+  type?: TaskType;
 };
 
 type TaskStore = {

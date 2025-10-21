@@ -17,10 +17,15 @@ export const TaskList = () => {
   const navigation = useNavigation();
   const clearUser = useUserStore(state => state.clearUser);
   const tasks = useTaskStore(state => state.tasks);
+  const removeTask = useTaskStore(state => state.removeTask);
 
   const onAddTask = () => {
     // @TODO: Update types
     navigation.navigate('AddTask' as never);
+  };
+
+  const onDeleteTask = (id: string) => {
+    removeTask(id);
   };
 
   return (
@@ -52,7 +57,9 @@ export const TaskList = () => {
 
       <ScrollView style={s.taskContainer}>
         {tasks.map(task => (
-          <TaskCard key={task.id} data={task} />
+          <View key={task.id} style={{ marginBottom: theme.spacing(1) }}>
+            <TaskCard data={task} onDelete={onDeleteTask} />
+          </View>
         ))}
       </ScrollView>
 

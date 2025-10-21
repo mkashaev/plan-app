@@ -15,11 +15,10 @@ export const RootNavigation = () => {
         initialRouteName="Login"
         screenOptions={{ headerShown: false }}
       >
-        {!user ? ( // ✅ Public Routes
+        {!user ? (
           <Stack.Screen name="Login" component={Login} />
         ) : (
           <>
-            {/* 🔒 Protected Routes */}
             <Stack.Screen name="TaskList" component={TaskList} />
             <Stack.Screen name="AddTask" component={AddTask} />
           </>
