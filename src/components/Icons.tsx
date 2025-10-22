@@ -87,3 +87,21 @@ export const SpotIcon = ({
     </Svg>
   );
 };
+
+export const LeftArrowIcon = ({
+  color = 'white',
+  width = 24,
+  height = 24,
+}: Props) => {
+  return (
+    <Svg width={width} height={height} viewBox="0 0 24 24" fill="none">
+      <Path
+        d="M15.5 19L8.5 12L15.5 5"
+        stroke={color}
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </Svg>
+  );
+};

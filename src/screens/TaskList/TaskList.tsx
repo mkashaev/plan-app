@@ -12,6 +12,7 @@ import { TabButton } from './components/TabButton';
 import { TaskCard } from './components/TaskCard';
 import { useTaskStore } from '../../store/useTaskStore';
 import { useNavigation } from '@react-navigation/native';
+import { prularize } from '../../utils/prularize';
 
 export const TaskList = () => {
   const navigation = useNavigation();
@@ -28,6 +29,10 @@ export const TaskList = () => {
     removeTask(id);
   };
 
+  const onUpdateTask = (id: string) => {
+    navigation.navigate({ name: 'EditTask', params: { id } } as never);
+  };
+
   return (
     <View style={s.container}>
       <View style={s.header}>
@@ -40,7 +45,11 @@ export const TaskList = () => {
 
       <View style={s.chin}>
         <Text style={s.chinText}>You have </Text>
-        <Text style={s.chinText}>6 tasks here</Text>
+        <Text style={s.chinText}>{`${tasks.length} ${prularize(
+          tasks.length,
+          'task',
+          'tasks',
+        )} here`}</Text>
       </View>
 
       <View style={s.filters}>
@@ -58,7 +67,11 @@ export const TaskList = () => {
       <ScrollView style={s.taskContainer}>
         {tasks.map(task => (
           <View key={task.id} style={{ marginBottom: theme.spacing(1) }}>
-            <TaskCard data={task} onDelete={onDeleteTask} />
+            <TaskCard
+              data={task}
+              onDelete={onDeleteTask}
+              onUpdate={onUpdateTask}
+            />
           </View>
         ))}
       </ScrollView>

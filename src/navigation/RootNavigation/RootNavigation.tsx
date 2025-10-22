@@ -4,6 +4,7 @@ import { useUserStore } from '../../store/useUserStore';
 import { Login } from '../../screens/Login';
 import { TaskList } from '../../screens/TaskList';
 import { AddTask } from '../../screens/AddTask';
+import { EditTask } from '../../screens/EditTask';
 
 const Stack = createNativeStackNavigator();
 
@@ -21,6 +22,7 @@ export const RootNavigation = () => {
           <>
             <Stack.Screen name="TaskList" component={TaskList} />
             <Stack.Screen name="AddTask" component={AddTask} />
+            <Stack.Screen name="EditTask" component={EditTask} />
           </>
         )}
       </Stack.Navigator>

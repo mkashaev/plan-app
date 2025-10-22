@@ -9,9 +9,10 @@ import { PenIcon, SpotIcon, TrashIcon } from '../../../../components/Icons';
 type Props = {
   data: Task;
   onDelete?: (id: string) => void;
+  onUpdate?: (id: string) => void;
 };
 
-export const TaskCard = ({ data, onDelete }: Props) => {
+export const TaskCard = ({ data, onDelete, onUpdate }: Props) => {
   const [value, setValue] = useState(data.completed);
 
   const onClick = () => {
@@ -20,6 +21,10 @@ export const TaskCard = ({ data, onDelete }: Props) => {
 
   const handleDelete = () => {
     onDelete?.(data.id);
+  };
+
+  const handleUpdate = () => {
+    onUpdate?.(data.id);
   };
 
   return (
@@ -46,20 +51,22 @@ export const TaskCard = ({ data, onDelete }: Props) => {
 
         <View style={s.dataBlock}>
           <Pressable onPress={onClick}>
-            <Text style={s.title}>{data.title}</Text>
+            <Text style={[s.title, value && s.crossed]}>{data.title}</Text>
           </Pressable>
 
-          <View style={s.addressWrapper}>
-            <SpotIcon width={10} height={10} color="#5E6178" />
-            <Text style={s.address}>393 Lewis Ave, Brooklyn, NY 11233</Text>
-          </View>
+          {data.location && (
+            <View style={s.addressWrapper}>
+              <SpotIcon width={10} height={10} color="#5E6178" />
+              <Text style={s.address}>393 Lewis Ave, Brooklyn, NY 11233</Text>
+            </View>
+          )}
 
           <View style={s.buttonGroup}>
             <RoundButton onPress={handleDelete}>
               <TrashIcon width={16} height={16} color="#6871EE" />
             </RoundButton>
 
-            <RoundButton>
+            <RoundButton onPress={handleUpdate}>
               <PenIcon width={16} height={16} color="#6871EE" />
             </RoundButton>
           </View>
@@ -106,6 +113,13 @@ const s = StyleSheet.create({
   title: {
     fontSize: 14,
     fontWeight: 'bold',
+  },
+
+  crossed: {
+    textDecorationLine: 'line-through', // ✅ draw line across text
+    textDecorationStyle: 'solid', // optional: solid, double, dotted, dashed
+    textDecorationColor: '#9CA3AF', // optional: change line color
+    color: '#9CA3AF', // dim text color
   },
 
   checkboxGroup: {
