@@ -1,11 +1,4 @@
-import {
-  Button,
-  Pressable,
-  StyleSheet,
-  Text,
-  View,
-  ScrollView,
-} from 'react-native';
+import { Button, Pressable, StyleSheet, Text, View, ScrollView } from 'react-native';
 import { useUserStore } from '../../store/useUserStore';
 import { theme } from '../../utils/theme';
 import { TabButton } from './components/TabButton';
@@ -13,12 +6,14 @@ import { TaskCard } from './components/TaskCard';
 import { useTaskStore } from '../../store/useTaskStore';
 import { useNavigation } from '@react-navigation/native';
 import { prularize } from '../../utils/prularize';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export const TaskList = () => {
+  const safeAreaInsets = useSafeAreaInsets();
   const navigation = useNavigation();
-  const clearUser = useUserStore(state => state.clearUser);
-  const tasks = useTaskStore(state => state.tasks);
-  const removeTask = useTaskStore(state => state.removeTask);
+  const clearUser = useUserStore((state) => state.clearUser);
+  const tasks = useTaskStore((state) => state.tasks);
+  const removeTask = useTaskStore((state) => state.removeTask);
 
   const onAddTask = () => {
     // @TODO: Update types
@@ -35,7 +30,7 @@ export const TaskList = () => {
 
   return (
     <View style={s.container}>
-      <View style={s.header}>
+      <View style={[s.header, { paddingTop: safeAreaInsets.top }]}>
         <Text style={s.headerText}>Hello, there</Text>
 
         <Pressable style={s.headerButton} onPress={onAddTask}>
@@ -48,7 +43,7 @@ export const TaskList = () => {
         <Text style={s.chinText}>{`${tasks.length} ${prularize(
           tasks.length,
           'task',
-          'tasks',
+          'tasks'
         )} here`}</Text>
       </View>
 
@@ -65,13 +60,9 @@ export const TaskList = () => {
       </View>
 
       <ScrollView style={s.taskContainer}>
-        {tasks.map(task => (
+        {tasks.map((task) => (
           <View key={task.id} style={{ marginBottom: theme.spacing(1) }}>
-            <TaskCard
-              data={task}
-              onDelete={onDeleteTask}
-              onUpdate={onUpdateTask}
-            />
+            <TaskCard data={task} onDelete={onDeleteTask} onUpdate={onUpdateTask} />
           </View>
         ))}
       </ScrollView>

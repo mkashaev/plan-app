@@ -2,23 +2,13 @@ import { enableScreens } from 'react-native-screens';
 
 enableScreens();
 
-import { StatusBar, StyleSheet, View } from 'react-native';
-import {
-  SafeAreaProvider,
-  useSafeAreaInsets,
-} from 'react-native-safe-area-context';
-import { getSafeArea } from './utils/getSafeArea';
-import { theme } from './utils/theme';
+import { StatusBar } from 'react-native';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+
 import { RootNavigation } from './navigation/RootNavigation';
 
 function AppContent() {
-  const safeAreaInsets = useSafeAreaInsets();
-
-  return (
-    <View style={[styles.container, getSafeArea(safeAreaInsets)]}>
-      <RootNavigation />
-    </View>
-  );
+  return <RootNavigation />;
 }
 
 function App() {
@@ -29,12 +19,5 @@ function App() {
     </SafeAreaProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: theme.color.primary.purple,
-  },
-});
 
 export default App;

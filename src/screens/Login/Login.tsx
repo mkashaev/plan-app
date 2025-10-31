@@ -5,8 +5,11 @@ import SplashLogo from '../../assets/SplashLogo.svg';
 import { theme } from '../../utils/theme';
 import { useUser } from '../../api/user';
 import { useUserStore } from '../../store/useUserStore';
+import { getSafeArea } from '../../utils/getSafeArea';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export const Login: React.FC = () => {
+  const safeAreaInsets = useSafeAreaInsets();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
@@ -23,7 +26,7 @@ export const Login: React.FC = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={[getSafeArea(safeAreaInsets), styles.container]}>
       <View style={styles.logoWrapper}>
         <SplashLogo width={140} height={70} />
       </View>
@@ -58,7 +61,8 @@ export const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     alignContent: 'center',
-    paddingHorizontal: theme.spacing(2),
+    paddingLeft: theme.spacing(2),
+    paddingRight: theme.spacing(2),
     backgroundColor: theme.color.primary.purple,
   },
 

@@ -1,11 +1,4 @@
-import {
-  Pressable,
-  StyleSheet,
-  Text,
-  TextInput,
-  useWindowDimensions,
-  View,
-} from 'react-native';
+import { Pressable, StyleSheet, Text, TextInput, useWindowDimensions, View } from 'react-native';
 import { Button } from '../../components';
 import { useState } from 'react';
 import type { Task, TaskType } from '../../store/useTaskStore';
@@ -14,6 +7,7 @@ import TaskImagePlaceholder from '../../assets/TaskImagePlaceholder.svg';
 import Checkbox from 'expo-checkbox';
 import { TaskTypeCard } from './components/TaskTypeCard';
 import { LeftArrowIcon } from '../../components/Icons';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const aspectRatio = 29 / 10;
 
@@ -25,13 +19,9 @@ type Props = {
   onDelete?: (id: string) => void;
 };
 
-export const TaskEditor = ({
-  data,
-  onSave,
-  onBack,
-  onAddPhoto,
-  onDelete,
-}: Props) => {
+export const TaskEditor = ({ data, onSave, onBack, onAddPhoto, onDelete }: Props) => {
+  const safeAreaInsets = useSafeAreaInsets();
+  const { width } = useWindowDimensions();
   const isNewTask = !data;
   const screenTitle = isNewTask ? 'Add New Task' : 'Edit task';
 
@@ -42,8 +32,6 @@ export const TaskEditor = ({
   const [taskType, setTaskType] = useState<TaskType>(() => {
     return data?.type ? data.type : 'urgent';
   });
-
-  const { width } = useWindowDimensions();
 
   const onSubmit = () => {
     if (!title) {
@@ -75,7 +63,7 @@ export const TaskEditor = ({
     <View style={s.container}>
       <View>
         <View style={{ backgroundColor: theme.color.base.white }}>
-          <View style={s.headerBase}>
+          <View style={[s.headerBase, { paddingTop: safeAreaInsets.top }]}>
             <View style={s.backWrapper}>
               <Pressable onPress={onBack}>
                 <LeftArrowIcon />
@@ -84,9 +72,11 @@ export const TaskEditor = ({
 
             <Text style={s.headerTitle}>{screenTitle}</Text>
             <View style={s.headerEmpty}>
-              <Pressable onPress={handleDelete}>
-                <Text style={s.deleteText}>Delete</Text>
-              </Pressable>
+              {!isNewTask && (
+                <Pressable onPress={handleDelete}>
+                  <Text style={s.deleteText}>Delete</Text>
+                </Pressable>
+              )}
             </View>
           </View>
         </View>
@@ -104,18 +94,11 @@ export const TaskEditor = ({
           <View style={s.wrapper}>
             <Text style={s.label}>TaskName</Text>
             <View style={s.textInputWrapper}>
-              <TextInput
-                style={[s.input]}
-                value={title}
-                onChangeText={setTitle}
-              />
+              <TextInput style={[s.input]} value={title} onChangeText={setTitle} />
             </View>
           </View>
 
-          <Pressable
-            style={s.locationWrapper}
-            onPress={() => setIsLocation(prev => !prev)}
-          >
+          <Pressable style={s.locationWrapper} onPress={() => setIsLocation((prev) => !prev)}>
             <Checkbox
               value={isLocation}
               style={[s.checkbox]}

@@ -1,4 +1,11 @@
 module.exports = {
   root: true,
-  extends: '@react-native',
+  extends: [
+    '@react-native',
+    'plugin:react/recommended',
+    'airbnb',
+    'airbnb/hooks',
+    'prettier',
+    'prettier/react',
+  ],
 };
