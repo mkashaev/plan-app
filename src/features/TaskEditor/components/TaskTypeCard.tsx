@@ -36,7 +36,7 @@ export const TaskTypeCard = ({
       <View style={s.checkboxGroup}>
         <Checkbox
           value={value === name}
-          style={[s.checkbox]}
+          style={s.checkbox}
           color={value ? theme.color.primary.purple : undefined}
           onValueChange={onClick}
         />

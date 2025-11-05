@@ -1,15 +1,23 @@
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { Task, useTaskStore } from '../../store/useTaskStore';
 import { TaskEditor } from '../../features/TaskEditor';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { RootStackParamList } from '../../navigation/RootNavigation/types';
 
 type Params = {
   id: string;
 };
 
+type EditTaskNavigationProp = StackNavigationProp<
+  RootStackParamList,
+  'EditTask'
+>;
+type EditTaskRouteProp = RouteProp<{ EditTask: Params }, 'EditTask'>;
+
 export const EditTask = () => {
-  const navigate = useNavigation();
-  const route = useRoute();
-  const { id } = route.params as Params;
+  const navigate = useNavigation<EditTaskNavigationProp>();
+  const route = useRoute<EditTaskRouteProp>();
+  const { id } = route.params;
   const task = useTaskStore(state => state.getById(id));
   const editTask = useTaskStore(state => state.editTask);
   const removeTask = useTaskStore(state => state.removeTask);

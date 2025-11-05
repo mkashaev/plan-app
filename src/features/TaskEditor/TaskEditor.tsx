@@ -17,6 +17,18 @@ import { LeftArrowIcon } from '../../components/Icons';
 
 const aspectRatio = 29 / 10;
 
+type TaskItemType = {
+  light: 'red' | 'yellow' | 'green';
+  taskTitle: string;
+  name: string;
+};
+
+const taskTypes: TaskItemType[] = [
+  { light: 'red', taskTitle: 'Urgent', name: 'urgent' },
+  { light: 'yellow', taskTitle: 'Regular', name: 'regular' },
+  { light: 'green', taskTitle: 'Low', name: 'low' },
+];
+
 type Props = {
   data?: Task;
   onSave?: (data: Task) => void;
@@ -38,8 +50,8 @@ export const TaskEditor = ({
   const [title, setTitle] = useState(() => {
     return data ? data.title : '';
   });
-  const [isLocation, setIsLocation] = useState(!!data?.location);
-  const [taskType, setTaskType] = useState<TaskType>(() => {
+  const [isLocation, setLocation] = useState(!!data?.location);
+  const [taskType, setTaskType] = useState<TaskType | undefined>(() => {
     return data?.type ? data.type : 'urgent';
   });
 
@@ -62,7 +74,7 @@ export const TaskEditor = ({
   };
 
   const onChangeTaskType = (value?: TaskType) => {
-    setTaskType(value as TaskType);
+    setTaskType(value);
   };
 
   const handleDelete = () => {
@@ -73,7 +85,7 @@ export const TaskEditor = ({
 
   return (
     <View style={s.container}>
-      <View>
+      <>
         <View style={{ backgroundColor: theme.color.base.white }}>
           <View style={s.headerBase}>
             <View style={s.backWrapper}>
@@ -81,7 +93,6 @@ export const TaskEditor = ({
                 <LeftArrowIcon />
               </Pressable>
             </View>
-
             <Text style={s.headerTitle}>{screenTitle}</Text>
             <View style={s.headerEmpty}>
               <Pressable onPress={handleDelete}>
@@ -90,7 +101,6 @@ export const TaskEditor = ({
             </View>
           </View>
         </View>
-
         <View style={s.imageContainer}>
           <TaskImagePlaceholder width={width} height={width / aspectRatio} />
           <View style={s.addPhotoButton}>
@@ -99,58 +109,43 @@ export const TaskEditor = ({
             </Button>
           </View>
         </View>
-
         <View style={s.formWrapper}>
           <View style={s.wrapper}>
             <Text style={s.label}>TaskName</Text>
             <View style={s.textInputWrapper}>
               <TextInput
-                style={[s.input]}
+                style={s.input}
                 value={title}
                 onChangeText={setTitle}
               />
             </View>
           </View>
-
           <Pressable
             style={s.locationWrapper}
-            onPress={() => setIsLocation(prev => !prev)}
+            onPress={() => setLocation(prev => !prev)}
           >
             <Checkbox
               value={isLocation}
-              style={[s.checkbox]}
+              style={s.checkbox}
               color={isLocation ? theme.color.primary.purple : undefined}
-              onValueChange={setIsLocation}
+              onValueChange={setLocation}
             />
             <Text style={s.checkboxText}>Add Location</Text>
           </Pressable>
-
           <View style={s.typeCardWrapper}>
-            <TaskTypeCard
-              light="red"
-              title="Urgent"
-              name="urgent"
-              value={taskType}
-              onChange={onChangeTaskType}
-            />
-            <TaskTypeCard
-              light="yellow"
-              title="Regular"
-              name="regular"
-              value={taskType}
-              onChange={onChangeTaskType}
-            />
-            <TaskTypeCard
-              light="green"
-              title="Low"
-              name="low"
-              value={taskType}
-              onChange={onChangeTaskType}
-            />
+            {taskTypes.map(({ light, taskTitle, name }) => (
+              <TaskTypeCard
+                key={name}
+                light={light}
+                title={taskTitle}
+                name={name}
+                value={taskType}
+                onChange={onChangeTaskType}
+              />
+            ))}
           </View>
         </View>
-      </View>
-
+      </>
       <View style={s.buttonWrapper}>
         <Button onPress={onSubmit}>Save</Button>
       </View>

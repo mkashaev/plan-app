@@ -6,7 +6,7 @@ export const AddTask = () => {
   const addTask = useTaskStore(state => state.addTask);
   const navigation = useNavigation();
 
-  const onSubmit = (data: Task) => {
+  const onSaveTask = (data: Task) => {
     addTask(data);
     navigation.goBack();
   };
@@ -20,6 +20,6 @@ export const AddTask = () => {
   };
 
   return (
-    <TaskEditor onSave={onSubmit} onBack={onBack} onAddPhoto={onAddPhoto} />
+    <TaskEditor onSave={onSaveTask} onBack={onBack} onAddPhoto={onAddPhoto} />
   );
 };

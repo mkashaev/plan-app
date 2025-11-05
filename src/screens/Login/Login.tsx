@@ -12,10 +12,10 @@ export const Login: React.FC = () => {
 
   const setUser = useUserStore(state => state.setUser);
 
-  const { asyncMutate, isLoading } = useUser();
+  const { fetchUser, isLoading } = useUser();
 
   const onLogin = async () => {
-    const data = await asyncMutate({ username, password });
+    const data = await fetchUser({ username, password });
 
     if (data) {
       setUser(data);
@@ -27,12 +27,9 @@ export const Login: React.FC = () => {
       <View style={styles.logoWrapper}>
         <SplashLogo width={140} height={70} />
       </View>
-
       <View style={styles.formWrapper}>
         <Text style={styles.title}>Welcome</Text>
-
         <Input label="Login" value={username} onChangeText={setUsername} />
-
         <View style={styles.passwordWrapper}>
           <Input
             label="Password"
@@ -42,7 +39,6 @@ export const Login: React.FC = () => {
           />
         </View>
       </View>
-
       <View style={styles.buttonWrapper}>
         <Button onPress={onLogin} disabled={isLoading} isLoading={isLoading}>
           Log In

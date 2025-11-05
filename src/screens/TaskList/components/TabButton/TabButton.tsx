@@ -1,5 +1,5 @@
-import { Pressable, StyleSheet, Text } from 'react-native';
-import { theme } from '../../../../utils/theme';
+import { Pressable, Text } from 'react-native';
+import { s } from './styles';
 
 type Props = {
   isActive?: boolean;
@@ -8,62 +8,20 @@ type Props = {
 };
 
 export const TabButton = ({ children, isActive, onPress }: Props) => {
+  const pressableStyles = [
+    s.container,
+    isActive && s.activeWrapper,
+    !isActive && s.defaultWrapper,
+  ];
+
+  const textStyles = [
+    s.label,
+    isActive && s.activeText,
+    !isActive && s.defaultText,
+  ];
   return (
-    <Pressable
-      style={[
-        s.base.container,
-        isActive && s.active.wrapper,
-        !isActive && s.default.wrapper,
-      ]}
-      onPress={onPress}
-    >
-      <Text
-        style={[
-          s.base.label,
-          isActive && s.active.text,
-          !isActive && s.default.text,
-        ]}
-      >
-        {children}
-      </Text>
+    <Pressable style={pressableStyles} onPress={onPress}>
+      <Text style={textStyles}>{children}</Text>
     </Pressable>
   );
-};
-
-const s = {
-  base: StyleSheet.create({
-    container: {
-      alignItems: 'center',
-      justifyContent: 'center',
-      borderRadius: 8,
-      paddingVertical: 9,
-      paddingHorizontal: 24,
-    },
-    label: {
-      fontSize: 14,
-      fontWeight: '500',
-    },
-  }),
-
-  active: StyleSheet.create({
-    wrapper: {
-      backgroundColor: theme.color.primary.purple,
-    },
-    text: {
-      color: theme.color.base.white,
-      fontSize: 12,
-      fontWeight: 'bold',
-    },
-  }),
-
-  default: StyleSheet.create({
-    wrapper: {
-      backgroundColor: theme.color.base.white,
-    },
-    text: {
-      color: theme.color.base.black,
-      fontSize: 12,
-      fontWeight: 'bold',
-    },
-  }),
 };

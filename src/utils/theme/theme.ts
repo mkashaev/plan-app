@@ -15,9 +15,9 @@ export const theme = {
       purple: '#6871ee',
     },
     status: {
-      red: '',
-      yellow: '',
-      green: '',
+      red: '#DF7E8D',
+      yellow: '#F8D94F',
+      green: '#77D4BD',
     },
     bg: {
       lightGrey: '#F8FAFF',

@@ -5,7 +5,7 @@ import { login } from './user';
 export const useUser = () => {
   const [user, setUser] = useState<AuthData | null>(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setIsError] = useState<Error | null>(null);
+  const [error, setError] = useState<Error | null>(null);
 
   const fetchUser = async (data: LoginDto) => {
     setIsLoading(true);
@@ -14,7 +14,7 @@ export const useUser = () => {
       setUser(response);
       return response;
     } catch (err) {
-      setIsError(err as Error);
+      setError(err as Error);
     } finally {
       setIsLoading(false);
     }
@@ -26,6 +26,6 @@ export const useUser = () => {
     data: user,
     isLoading,
     error,
-    asyncMutate: fetchUser,
+    fetchUser,
   };
 };

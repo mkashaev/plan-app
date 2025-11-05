@@ -116,10 +116,10 @@ const s = StyleSheet.create({
   },
 
   crossed: {
-    textDecorationLine: 'line-through', // ✅ draw line across text
-    textDecorationStyle: 'solid', // optional: solid, double, dotted, dashed
-    textDecorationColor: '#9CA3AF', // optional: change line color
-    color: '#9CA3AF', // dim text color
+    textDecorationLine: 'line-through',
+    textDecorationStyle: 'solid',
+    textDecorationColor: '#9CA3AF',
+    color: '#9CA3AF',
   },
 
   checkboxGroup: {
